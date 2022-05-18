@@ -1,6 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
+  '@daotl/cryptico': ^2.0.3
   '@fortawesome/fontawesome-svg-core': ^6.1.1
   '@fortawesome/free-solid-svg-icons': ^6.1.1
   '@fortawesome/vue-fontawesome': ^3.0.0-5
@@ -11,7 +12,9 @@ specifiers:
   '@vitejs/plugin-vue': ^2.3.3
   autoprefixer: ^10.4.7
   axios: ^0.27.2
+  clipboard: ^2.0.11
   commander: ^9.2.0
+  cryptico: ^1.0.2
   eslint: ^8.15.0
   eslint-plugin-vue: ^8.7.1
   fs-extra: ^10.1.0
@@ -22,11 +25,13 @@ specifiers:
   sass: ^1.51.0
   tailwindcss: ^3.0.24
   tippy.js: ^6.3.7
+  totp-generator: ^0.0.13
   vite: ^2.9.9
   vue: ^3.2.33
   ws: ^8.6.0
 
 dependencies:
+  '@daotl/cryptico': 2.0.3
   '@fortawesome/fontawesome-svg-core': 6.1.1
   '@fortawesome/free-solid-svg-icons': 6.1.1
   '@fortawesome/vue-fontawesome': 3.0.0-5_8477efc2ad5c61f1a5ec9f2a809fa8ec
@@ -36,6 +41,7 @@ dependencies:
   '@nuogz/poseidon': 6.1.1
   axios: 0.27.2
   commander: 9.2.0
+  cryptico: 1.0.2
   fs-extra: 10.1.0
   fs-readdir-recursive: 1.1.0
   moment: 2.29.3
@@ -46,11 +52,13 @@ dependencies:
 devDependencies:
   '@vitejs/plugin-vue': 2.3.3_vite@2.9.9+vue@3.2.33
   autoprefixer: 10.4.7_postcss@8.4.13
+  clipboard: 2.0.11
   eslint: 8.15.0
   eslint-plugin-vue: 8.7.1_eslint@8.15.0
   postcss: 8.4.13
   sass: 1.51.0
   tailwindcss: 3.0.24
+  totp-generator: 0.0.13
   vite: 2.9.9_sass@1.51.0
   vue: 3.2.33
 
@@ -83,6 +91,10 @@ packages:
       '@babel/helper-validator-identifier': 7.16.7
       to-fast-properties: 2.0.0
     dev: true
+
+  /@daotl/cryptico/2.0.3:
+    resolution: {integrity: sha512-PUAcfiUhGg5Zg0Lce7IyqeOQ+Q6Dgq1+x/Vv8Mbc8qoaZKqdz+d+eP82UuSrxeWyf6dbGj2tiriQ187/RMGy3A==}
+    dev: false
 
   /@eslint/eslintrc/1.2.3:
     resolution: {integrity: sha512-uGo44hIwoLGNyduRpjdEpovcbMdd+Nv7amtmJxnKmI8xj6yd5LncmSwDa5NgX/41lIFJtkjD6YdVfgEzPfJ5UA==}
@@ -601,6 +613,14 @@ packages:
       restore-cursor: 3.1.0
     dev: false
 
+  /clipboard/2.0.11:
+    resolution: {integrity: sha512-C+0bbOqkezLIsmWSvlsXS0Q0bmkugu7jcfMIACB+RDEntIzQIkdr148we28AfSloQLRdZlYL/QYyrq05j/3Faw==}
+    dependencies:
+      good-listener: 1.2.2
+      select: 1.1.2
+      tiny-emitter: 2.1.0
+    dev: true
+
   /co-body/6.1.0:
     resolution: {integrity: sha512-m7pOT6CdLN7FuXUcpuz/8lfQ/L77x8SchHCF4G0RBTJO20Wzmhn5Sp4/5WsKy8OSpifBSUrmg83qEqaDHdyFuQ==}
     dependencies:
@@ -694,6 +714,10 @@ packages:
       which: 2.0.2
     dev: true
 
+  /cryptico/1.0.2:
+    resolution: {integrity: sha1-sTENaCcMnc9Q3tVK4TRFrytkBxs=}
+    dev: false
+
   /cssesc/3.0.0:
     resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}
     engines: {node: '>=4'}
@@ -752,6 +776,10 @@ packages:
     resolution: {integrity: sha1-3zrhmayt+31ECqrgsp4icrJOxhk=}
     engines: {node: '>=0.4.0'}
     dev: false
+
+  /delegate/3.2.0:
+    resolution: {integrity: sha512-IofjkYBZaZivn0V8nnsMJGBr4jVLxHDheKSW88PyxS5QC4Vo9ZbZVvhzlSxY87fVq3STR6r+4cGepyHkcWOQSw==}
+    dev: true
 
   /delegates/1.0.0:
     resolution: {integrity: sha1-hMbhWbgZBP3KWaDvRM2HDTElD5o=}
@@ -1338,6 +1366,12 @@ packages:
       type-fest: 0.20.2
     dev: true
 
+  /good-listener/1.2.2:
+    resolution: {integrity: sha1-1TswzfkxPf+33JoNR3CWqm0UXFA=}
+    dependencies:
+      delegate: 3.2.0
+    dev: true
+
   /graceful-fs/4.2.10:
     resolution: {integrity: sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==}
     dev: false
@@ -1545,6 +1579,10 @@ packages:
     optionalDependencies:
       graceful-fs: 4.2.10
     dev: false
+
+  /jssha/3.2.0:
+    resolution: {integrity: sha512-QuruyBENDWdN4tZwJbQq7/eAK85FqrI4oDbXjy5IBhYD+2pTJyBUWZe8ctWaCkrV0gy6AaelgOZZBMeswEa/6Q==}
+    dev: true
 
   /keygrip/1.1.0:
     resolution: {integrity: sha512-iYSchDJ+liQ8iwbSI2QqsQOvqv58eJCEanyJPJi+Khyu8smkcKSFUCbPwzFcL7YVtZ6eONjqRX/38caJ7QjRAQ==}
@@ -2244,6 +2282,10 @@ packages:
       source-map-js: 1.0.2
     dev: true
 
+  /select/1.1.2:
+    resolution: {integrity: sha1-DnNQrN7ICxEIUoeG7B1EGNEbOW0=}
+    dev: true
+
   /semver/7.3.7:
     resolution: {integrity: sha512-QlYTucUYOews+WeEujDoEGziz4K6c47V/Bd+LjSSYcA94p+DmINdf7ncaUinThfvZyu13lN9OY1XDxt8C0Tw0g==}
     engines: {node: '>=10'}
@@ -2437,6 +2479,10 @@ packages:
       any-promise: 1.3.0
     dev: false
 
+  /tiny-emitter/2.1.0:
+    resolution: {integrity: sha512-NB6Dk1A9xgQPMoGqC5CVXn123gWyte215ONT5Pp5a0yt4nlEoO1ZWeCwpncaekPHXO60i47ihFnZPiRPjRMq4Q==}
+    dev: true
+
   /tippy.js/6.3.7:
     resolution: {integrity: sha512-E1d3oP2emgJ9dRQZdf3Kkn0qJgI6ZLpyS5z6ZkY1DF3kaQaBsGZsndEpHwx+eC+tYM41HaSNvNtLx8tU57FzTQ==}
     dependencies:
@@ -2459,6 +2505,12 @@ packages:
     resolution: {integrity: sha512-o5sSPKEkg/DIQNmH43V0/uerLrpzVedkUh8tGNvaeXpfpuwjKenlSox/2O/BTlZUtEe+JG7s5YhEz608PlAHRA==}
     engines: {node: '>=0.6'}
     dev: false
+
+  /totp-generator/0.0.13:
+    resolution: {integrity: sha512-/Sg4eXvaLfaXNJJWv/OLPQm1GVKQXOe6mbDNXFBRZdYnaN9iY6Grk6uPYLph9MDn+cGn6GLNaqpak34jfu1CQQ==}
+    dependencies:
+      jssha: 3.2.0
+    dev: true
 
   /tslib/1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}

@@ -36,6 +36,9 @@
 	export const moduleNow = ref(null);
 
 	export const tabs = new TabAdmin();
+
+
+	export { Tab } from './TabAdmin.js';
 </script>
 
 <script setup>

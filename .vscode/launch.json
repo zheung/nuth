@@ -4,7 +4,7 @@
 		{
 			"type": "pwa-node",
 			"request": "launch",
-			"name": "服务器",
+			"name": "更新数据",
 			"skipFiles": [
 				"<node_internals>/**"
 			],
