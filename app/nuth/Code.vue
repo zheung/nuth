@@ -9,9 +9,9 @@
 			<p-coder-list>
 				<p-coder v-for="data of datas" :key="`code-${data.key}`">
 					<p-title v-tip="data.user">{{data.issuer}} ({{data.user}})</p-title>
-					<p-code-box>
-						<p-code @click="copy(data.code)">{{data.code}}</p-code>
-						<p-code-icon @click="copy(data.code)"><Fas :icon="faClipboard" /></p-code-icon>
+					<p-code-box @click="copy(data.code)">
+						<p-code>{{data.code}}</p-code>
+						<p-code-icon><Fas :icon="faClipboard" /></p-code-icon>
 					</p-code-box>
 				</p-coder>
 			</p-coder-list>
@@ -75,9 +75,9 @@
 	const copy = (text) => Clipboard.copy(String(text));
 
 	const access = async () => {
-		const text = await $get('data', null, { prefix: '', return: 'raw' });
+		const text = await $get('data', null, { prefix: './', return: 'raw' });
 
-		datas.value = JSON.parse(decrypt(text, password.value));
+		datas.value = JSON.parse(decrypt(text, password.value)).sort((a, b) => a.issuer.localeCompare(b.issuer));
 
 		isAccessed.value = true;
 
@@ -111,10 +111,11 @@ p-prog
 		@apply relative trans block fixed h-full bg-blue-400 top-0 left-0 overflow-hidden rounded-sm
 
 p-coder-list
-	@apply block
+	@apply block grid gap-4 p-4
+	@apply grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6
 
 	p-coder
-		@apply inblock m-4 p-4 bg-blue-500 shadow-mdd text-white w-60 rounded-md
+		@apply relative inblock p-4 bg-blue-500 shadow-mdd text-white rounded-md
 
 		p-title
 			@apply elli block mb-2 text-gray-200
