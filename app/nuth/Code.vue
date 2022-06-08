@@ -32,32 +32,13 @@
 	import Click from '../lib/comp/Click.vue';
 
 	import decrypt from './lib/decrypt.js';
-	import totp from './lib/TOTP.js';
+	import TOTP from './lib/TOTP.js';
 
 	import { faClipboard } from '@fortawesome/free-solid-svg-icons';
 
 
 
-
 	onMounted(() => tabs.emitChanged());
-
-
-	// const now = ref(new Tab());
-	// const T = computed(() => now.value.info);
-
-	// const initTab = (tab) => {
-	// 	const info = tab.info;
-
-
-	// 	info.isInit = true;
-	// };
-
-	// tabs.addChanger('code', tab => {
-	// 	now.value = tab;
-
-
-	// 	if(!tab.info.isInit) { initTab(tab); }
-	// });
 
 
 	const isAccessed = ref(false);
@@ -70,7 +51,7 @@
 	const second = ref(30);
 
 
-	const updateCodes = () => datas.value.forEach(data => data.code = totp(data.key, data.type == 'steam'));
+	const updateCodes = () => datas.value.forEach(data => data.code = TOTP(data.key, data.type == 'steam'));
 
 	const copy = (text) => Clipboard.copy(String(text));
 
@@ -111,8 +92,8 @@ p-prog
 		@apply relative trans block fixed h-full bg-blue-400 top-0 left-0 overflow-hidden rounded-sm
 
 p-coder-list
-	@apply block grid gap-4 p-4
-	@apply grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6
+	@apply block grid gap-8 p-4
+	@apply grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5
 
 	p-coder
 		@apply relative inblock p-4 bg-blue-500 shadow-mdd text-white rounded-md
