@@ -1,12 +1,14 @@
 <template>
 	<module>
 		<p-login-box v-if="!isAccessed">
-			<Texter v-model="password" password type="pass" place="访问密码" @keypress.enter="access" />
-			<Click access text="访问" @click="access" />
+			<p-login>
+				<Texter v-model="password" password type="pass" place="访问密码" @keypress.enter="access" />
+				<Click access text="访问" @click="access" />
+			</p-login>
 		</p-login-box>
 		<template v-else>
 			<p-prog><p-prog-value :style="{ width: `${(second - 1) / 29 * 100}%`}" /></p-prog>
-			<p-coder-list>
+			<p-coder-list @click.ctrl.self="isShowNSFW = !isShowNSFW">
 				<p-coder v-for="data of datas" :key="`code-${data.key}`">
 					<p-title v-tip="data.user">{{data.issuer}} ({{data.user}})</p-title>
 					<p-code-box @click="copy(data.code)">
@@ -20,7 +22,7 @@
 </template>
 
 <script setup>
-	import { onMounted, ref } from 'vue';
+	import { computed, onMounted, ref } from 'vue';
 	import Clipboard from 'clipboard';
 
 	import { $get } from '../lib/plugin/Aegis.js';
@@ -42,8 +44,9 @@
 
 
 	const isAccessed = ref(false);
+	const isShowNSFW = ref(false);
 
-	const datas = ref([]);
+	const datasAll = ref([]);
 
 
 	const password = ref('');
@@ -58,7 +61,7 @@
 	const access = async () => {
 		const text = await $get('data', null, { prefix: './', return: 'raw' });
 
-		datas.value = JSON.parse(decrypt(text, password.value)).sort((a, b) => a.issuer.localeCompare(b.issuer));
+		datasAll.value = JSON.parse(decrypt(text, password.value)).sort((a, b) => a.issuer.localeCompare(b.issuer));
 
 		isAccessed.value = true;
 
@@ -73,17 +76,24 @@
 			}
 		}, 1000);
 	};
+
+	const datas = computed(() => datasAll.value.filter(data => !!(~~isShowNSFW.value ^ ~~data.tags.includes('成人'))))
 </script>
 
 <style lang="sass" scoped>
 p-login-box
-	@apply block p-4 text-center text-2xl
+	@apply fixed top-0 bottom-0 left-0 right-0
+	@apply flex align-middle justify-center items-center
+	@apply text-2xl z-50
 
-	[password]
-		@apply inblock mr-4 w-64
+	p-login
+		@apply block
 
-	[access]
-		@apply inblock
+		[password]
+			@apply inblock mr-4 w-64
+
+		[access]
+			@apply inblock
 
 p-prog
 	@apply block fixed w-full h-0.5 top-0 left-0 overflow-hidden
