@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-	import { computed, onMounted, ref } from 'vue';
+	import { computed, onMounted, ref, watch } from 'vue';
 	import Clipboard from 'clipboard';
 
 	import { $get } from '../lib/plugin/Aegis.js';
@@ -77,7 +77,9 @@
 		}, 1000);
 	};
 
-	const datas = computed(() => datasAll.value.filter(data => !!(~~isShowNSFW.value ^ ~~data.tags.includes('成人'))))
+	const datas = computed(() => datasAll.value.filter(data => !(~~isShowNSFW.value ^ ~~data.tags.includes('成人'))));
+
+	watch(isShowNSFW, updateCodes);
 </script>
 
 <style lang="sass" scoped>
@@ -95,18 +97,22 @@ p-login-box
 		[access]
 			@apply inblock
 
+
 p-prog
-	@apply block fixed w-full h-0.5 top-0 left-0 overflow-hidden
+	@apply fixed top-0 left-0
+	@apply block w-full h-0.5
+	@apply overflow-hidden z-10
 
 	p-prog-value
 		@apply relative trans block fixed h-full bg-blue-400 top-0 left-0 overflow-hidden rounded-sm
 
 p-coder-list
-	@apply block grid gap-8 p-4
-	@apply grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5
+	@apply fixed top-0 left-0 bottom-0 right-0 z-0
+	@apply block p-4
+	@apply grid gap-8 grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5
 
 	p-coder
-		@apply relative inblock p-4 bg-blue-500 shadow-mdd text-white rounded-md
+		@apply relative inblock p-4 h-24 bg-blue-500 shadow-mdd text-white rounded-md
 
 		p-title
 			@apply elli block mb-2 text-gray-200
